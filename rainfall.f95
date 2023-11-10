@@ -2,10 +2,11 @@ program rainfall
 implicit none
     
     ! Variable Decleration
+    integer,parameter::nmax=50
     integer::i !Counter
     integer::st=0 ! Bohthitikh metablhth
-    character(15)::town(50) !Two one-dimensional arrays for the rainfall and the town
-    integer::rain(50)
+    character(15)::town(nmax) !Two one-dimensional arrays for the rainfall and the town
+    integer::rain(nmax)
     character(50)::title1,title2
     open(10,file='data.txt',status='old',iostat=st)
 
