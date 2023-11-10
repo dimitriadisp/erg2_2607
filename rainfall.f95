@@ -3,11 +3,10 @@ implicit none
     
     ! Variable Decleration
     integer,parameter::nmax=50
-    integer::i !Counter
+    integer::i,linesum=0 !Counter
     integer::st=0 ! Bohthitikh metablhth
     character(15)::town(nmax) !Two one-dimensional arrays for the rainfall and the town
     integer::rain(nmax)
-    character(50)::title1,title2
     open(10,file='data.txt',status='old',iostat=st)
 
     ! Checking if the file opened correctly
@@ -25,26 +24,39 @@ implicit none
     print'(A)','----------------------------------------------'
 
     ! Data Read and Display
-    read(10,'(A15,A50)')title1,title2
-    print'(A15,A)',title1,title2
 
+    call read_file(nmax,town,rain,linesum)
     
-    do
-      i=1
-      read(10,'(A15,I3)',iostat=st)town(i),rain(i)
-      if(st==-1) exit
-      print'(A15,I3)',town(i),rain(i)
-      i=i+1
-        
+    do i=1,linesum
+      print'(A15,I3)',town(i),rain(i)    
     end do 
+
 
 
 
     close(10)
 
-  ! Program Termination
-  print'(A)'
-  print'(A)',"Press Return to close program"  
-  read*
-  
+    ! Program Termination
+    print'(A)'
+    print'(A)',"Press Return to close program"  
+    read*
+    
+contains
+
+    subroutine read_file(nm,T,R,ln)
+    integer,intent(in)::nm
+    integer::st=0,i=1,ln
+    integer::R(nm)
+    character(15)::T(nm)
+
+    read(10,'(A15,A)')
+
+    do
+      read(10,'(A15,I3)',iostat=st)T(i),R(i)
+      if(st==-1) exit
+      i=i+1
+    end do
+    ln=i-1
+    end subroutine read_file
+    
 end program
